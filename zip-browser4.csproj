@@ -9,4 +9,9 @@
   <ItemGroup>
   </ItemGroup>
 
+
+  <ItemGroup>
+    <PackageReference Include="HttpZipStream" Version="0.2.84" />
+  </ItemGroup>
+
 </Project>
