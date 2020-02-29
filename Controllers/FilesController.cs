@@ -20,9 +20,9 @@ namespace zip_browser4.Controllers
         [HttpGet]
         public async Task<IActionResult> Zip(string hash, string path)
         {
-            System.Console.WriteLine("ZZZ: " + hash + '#' + path);
             using (var zipStream = new System.IO.Compression.HttpZipStream("https://siasky.net/" + hash))
             {
+                System.Console.WriteLine("ZZZ: " + "https://siasky.net/" + hash);
                 string content = "";
                 var entryList = await zipStream.GetEntriesAsync();
                 foreach (var e in entryList) {
