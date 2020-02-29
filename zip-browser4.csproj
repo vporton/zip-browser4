@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>zip_browser4</RootNamespace>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+  </ItemGroup>
+
+</Project>
