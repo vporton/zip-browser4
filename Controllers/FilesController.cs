@@ -16,13 +16,13 @@ namespace zip_browser4.Controllers
             return "TEST";
         }
 
-        [Route("Files/Zip/{hash}/{path}")]
+        [Route("Files/Zip/{path}")]
         [HttpGet]
-        public async Task<IActionResult> Zip(string hash, string path)
+        public async Task<IActionResult> SiaZip([FromQuery] string hash, string path)
         {
             var zipStream = new System.IO.Compression.HttpZipStream("https://siasky.net/" + hash);
             if(await zipStream.GetContentLengthAsync() == -1)
-                NotFound("No such Sia hash.");
+                return NotFound("No such Sia hash.");
             using (zipStream)
             {
                 await zipStream.GetContentLengthAsync();
