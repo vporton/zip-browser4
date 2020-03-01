@@ -20,13 +20,18 @@ namespace zip_browser4.Controllers
         [HttpGet]
         public async Task<IActionResult> Zip(string hash, string path)
         {
-            using (var zipStream = new System.IO.Compression.HttpZipStream("https://siasky.net/" + hash))
+            var zipStream = new System.IO.Compression.HttpZipStream("https://siasky.net/" + hash);
+            if(await zipStream.GetContentLengthAsync() == -1)
+                NotFound("No such Sia hash.");
+            using (zipStream)
             {
-                System.Console.WriteLine("ZZZ: " + "https://siasky.net/" + hash);
+                await zipStream.GetContentLengthAsync();
                 string content = "";
                 var entryList = await zipStream.GetEntriesAsync();
+                bool found = false;
                 foreach (var e in entryList) {
                     if (e.FileName != path) continue;
+                    found = true;
                     await zipStream.ExtractAsync(e, async (entryStream) =>
                     {
                         byte[] buffer = new byte[4096];
@@ -37,6 +42,7 @@ namespace zip_browser4.Controllers
                         }
                     });
                 }
+                if (!found) return NotFound("No such file in archive.");
                 return View(content);
             }
         }

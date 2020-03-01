@@ -44,7 +44,7 @@ namespace zip_browser4
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -52,6 +52,7 @@ namespace zip_browser4
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseStatusCodePages();
         }
     }
 }
