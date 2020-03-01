@@ -16,9 +16,9 @@ namespace zip_browser4.Controllers
             return "TEST";
         }
 
-        [Route("Files/Zip/{path}")]
+        [Route("Files/SiaZip/{hash}")]
         [HttpGet]
-        public async Task<IActionResult> SiaZip([FromQuery] string hash, string path)
+        public async Task<IActionResult> SiaZip(string hash, [FromQuery] string path)
         {
             var zipStream = new System.IO.Compression.HttpZipStream("https://siasky.net/" + hash);
             if(await zipStream.GetContentLengthAsync() == -1)
@@ -43,6 +43,12 @@ namespace zip_browser4.Controllers
                     });
                 }
                 if (!found) return NotFound("No such file in archive.");
+                System.Net.Mime.ContentDisposition cd = new System.Net.Mime.ContentDisposition
+                {
+                        FileName = path,
+                        Inline = false,
+                };
+                Response.Headers.Add("Content-Disposition", cd.ToString());
                 return View(content);
             }
         }
